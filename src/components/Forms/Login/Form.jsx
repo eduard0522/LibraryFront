@@ -2,13 +2,13 @@ import { LoginRequest } from '../../../axios/Auth'
 import { useContext, useState } from 'react'
 import { Link } from 'react-router'
 import InputForm from './InputForm'
-import ModalContext from '../../Context/Modals/ModalContext'
+import ModalContext from '../../../context/Modals/ModalContext'
 
 const FormLogin = () => {
   const { changeStateLoginForm } = useContext(ModalContext)
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    contrasena: '',
   })
 
   const [loading, setLoading] = useState(false)
@@ -23,7 +23,7 @@ const FormLogin = () => {
   }
 
   const validate = () => {
-    if (!formData.email || !formData.password) {
+    if (!formData.email || !formData.contrasena) {
       return false
     }
     return true
@@ -34,17 +34,17 @@ const FormLogin = () => {
     setError(null)
     if (!validate()) return
     setLoading(true)
+    console.log(formData)
     try {
       const response = await LoginRequest(formData, setLoading, setError)
       if (response) {
         localStorage.setItem('user', JSON.stringify({
           user: {
-            name : response.data.name || "user",
-            phone : response.data.phone || "no phone",
+            name : response.data.nombre || "user",
+            phone : response.data.telefono || "no phone",
             email : response.data.email || "noemail@mail.com",
-            address : response.data.address || "",
-            orders : response.data.orders || [],
-            id : response.data.idUsuario || ""
+            rol : response.data.rol || "",
+            id : response.data.id || ""
           }
         }))
         changeStateLoginForm()
@@ -60,15 +60,11 @@ const FormLogin = () => {
   }
 
   return (
-    <article className='py-8 px-12 rounded-md backdrop-blur-sm bg-[#ffffff] shadow-md   flex flex-col gap-6'>
-      <h1 className='flex text-5xl font-bold'>
-        <span className='bg-Primary-600 rounded-sm px-1 text-center flex items-center justify-center  text-white'>
-          {' '}
-          V{' '}
-        </span>{' '}
-        ianda
+    <article className='py-8 px-12 rounded-2xl backdrop-blur-md transition-all duration-200 z-20 bg-[#5882c126] border-[1px] border-[#ffffff32]   flex flex-col gap-6'>
+      <h1 className='flex text-5xl font-bold text-white'>
+        LibreX
       </h1>
-      <h2 className='text-xl font-bold text-Primary-600'>
+      <h2 className='text-xl font text-white'>
         {' '}
         Bienvenido de vuelta{' '}
       </h2>
@@ -83,29 +79,30 @@ const FormLogin = () => {
           />
           <InputForm
             type='password'
-            name='password'
-            value={formData.password}
+            name='contrasena'
+            value={formData.contrasena}
             placeholder='Contraseña'
             handleChange={handleChange}
           />
-          <p className='text-Primary-600 font-semibold text-end hover:text-Primary-800 cursor-pointer'>
+          <p className='text-white font-semibold text-end hover:text-blue-950 cursor-pointer'>
             {' '}
             Olvidé la contraseña{' '}
           </p>
           <button
-            className='w-full rounded-md bg-Primary-600 py-2 px-4 text-white font-bold hover:bg-Primary-800'
+            className='w-full rounded-md bg-[#003465]  py-2 px-4 text-white font-medium hover:bg-blue-900'
             type='submit'
             disabled={loading}
+            onClick={handleSubmit}
           >
             {' '}
             Iniciar Sesión{' '}
           </button>
 
-          <h3 className='font-semibold'>
+          <h3 className='font-medium text-white'>
             {' '}
             ¿ No tienes cuenta ?{' '}
             <Link to="/register">  
-              <span className='text-Primary-600 font-bold underline hover:text-Primary-800 cursor-pointer'>
+              <span className='text-white font-semibold underline  hover:text-blue-950  cursor-pointer'>
                 crear una ahora{' '}
               </span>
             </Link> 

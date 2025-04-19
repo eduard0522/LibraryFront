@@ -1,9 +1,11 @@
-import { useContext } from "react"
 import BooksContext from "../../context/Books/BooksContext"
 import BookCard from "./BookCard"
+import { useContext } from "react"
+
 
 const BooksCatalog = () => {
   const { books } = useContext(BooksContext)
+
   if(!books || books.length === 0 ){
     return <h2> No se han cargado los datos </h2>
   }

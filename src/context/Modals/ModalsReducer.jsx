@@ -5,7 +5,8 @@ import {
   CHANGE_STATE_USER_PANEL, 
   CHANGE_STATE_UPDATE_USER ,
   CHANGE_STATE_CONFIRM_UPDATE_USER,
-  DETAILS_BOOK
+  DETAILS_BOOK,
+  SET_CONFIRM_LOAN
 } from "./types"
 
 
@@ -47,6 +48,12 @@ export const ModalReducer = ( state , action ) => {
         return{
           ...state,
           detailsBook: payload
+      }
+      case SET_CONFIRM_LOAN:
+        console.log("LOAN")
+        return{
+          ...state,
+          confirmLoan: payload
       }
       default:
         return{

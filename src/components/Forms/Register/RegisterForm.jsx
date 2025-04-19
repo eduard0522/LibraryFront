@@ -5,6 +5,7 @@ import InputForm from '../Login/InputForm'
 import { RegisterRequest } from '../../../axios/Auth'
 import ModalContext from '../../../context/Modals/ModalContext'
 
+
 const RegistrationForm = () => {
   const { changeStateRegistrationForm } = useContext(ModalContext)
   const [formData, setFormData] = useState({
@@ -66,17 +67,14 @@ const handleSubmit = async (e) => {
     }
   }
   return (
-    <article className='py-8 px-12 rounded-md backdrop-blur-sm bg-[#ffffff] shadow-md   flex flex-col gap-4'>
-      <h1 className='flex text-5xl font-bold'>
-        <span className='bg-Primary-600 rounded-sm px-1 text-center flex items-center justify-center  text-white'>
-          {' '}
-          V{' '}
-        </span>{' '}
-        ianda
+    <article className='py-8 px-12 rounded-md backdrop-blur-sm bg-[#5882c126] border-[1px] border-[#ffffff32] flex flex-col gap-4'>
+       <h1 className='flex text-5xl font-bold text-white'>
+        LibreX
       </h1>
-      <h2 className='text-xl font-bold text-Primary-600'>
+
+      <h2 className='text-xl font-bold text-white'>
         {' '}
-        Bienvenido a vianda{' '}
+        Bienvenido a Librex{' '}
       </h2>
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col gap-2'>
@@ -109,7 +107,7 @@ const handleSubmit = async (e) => {
             handleChange={handleChange}
           />
           <button
-            className='w-full rounded-md bg-Primary-600 py-2 px-4 text-white font-bold hover:bg-Primary-800'
+            className='w-full rounded-md bg-blue-900 py-2 px-4 text-white font-bold hover:bg-blue-950'
             type='submit'
             disabled={loading}
           >
@@ -117,11 +115,11 @@ const handleSubmit = async (e) => {
             Crear cuenta{' '}
           </button>
 
-          <h3 className='font-semibold'>
+          <h3 className='font-semibold text-white'>
             {' '}
             ¿ Ya tienes una cuenta ?{' '}
             <Link to="/login">
-              <span className='text-Primary-600 font-bold underline hover:text-Primary-800 cursor-pointer'>
+              <span className='text-white font-bold underline hover:text-blue-950 cursor-pointer'>
                 {' '}
                 Inicia Sesión{' '}
               </span>
@@ -130,6 +128,8 @@ const handleSubmit = async (e) => {
 
           {error && <p className='text-red-600 font-semibold'>{error}</p>}
         </div>
+
+       
       </form>
     </article>
   )

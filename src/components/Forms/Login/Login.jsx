@@ -1,8 +1,8 @@
 import FormLogin from './Form'
 import LayoutForms from '../Layout'
 import { useContext } from 'react'
-import ModalContext from '../../Context/Modals/ModalContext'
-import { ConfirmModal } from '../../Modals/ConfirmModal'
+import {ConfirmModal} from "../../Modals/ConfirmModal"
+import ModalContext from '../../../context/Modals/ModalContext'
 
 const Login = () => {
   const{loginForm , changeStateLoginForm} = useContext(ModalContext)

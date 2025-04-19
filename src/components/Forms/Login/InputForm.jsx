@@ -2,7 +2,7 @@ const InputForm = ({type , name, placeholder , value, handleChange }) => {
   return(
     <div 
     className="flex flex-col gap-2">
-        <label htmlFor={name} className="font-bold"> {placeholder} </label>
+        <label htmlFor={name} className=" text-white"> {placeholder} </label>
          <input 
           type={type} 
           name={name}

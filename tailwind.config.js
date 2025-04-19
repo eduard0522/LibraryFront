@@ -15,6 +15,9 @@ export default {
           400: "#fb3af5" 
         }
       },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
     },
   },
   plugins: [],
