@@ -1,39 +1,42 @@
-import Hero from "../HeroIndex/Hero"
 import NavHeader from "../Nav/NavHeader"
 import Footer from "../Footer/Footer"
-import Paragraphs from "../Paragraphs/Paragraphs"
 import { useContext, useEffect } from "react"
 import Modal from "../Modals/Modal"
 import BooksContext from "../../context/Books/BooksContext"
-import BooksCatalog from "../Books/BooksCatalog"
 import BookDetails from "../Books/BookDetails"
 import UserPanel from "../UserPanel/UserPanel"
 import ModalContext from "../../context/Modals/ModalContext"
+import { useNavigate } from "react-router-dom"
+import UserContext from "../../context/User/UserContext"
 
-const Layout = () => {
-  const { books , getBooks} = useContext(BooksContext)
-  const {confirmLoan , setConfirmLoan} =useContext(ModalContext)
+const Layout = ({children}) => {
+  const {user} =useContext(UserContext)
+  const { getBooks} = useContext(BooksContext)
+  const { modalDate  } =useContext(ModalContext)
+  const navigate = useNavigate()
+  
+  const { isLoading } = useContext(UserContext)
   useEffect(() => {
     getBooks()
   },[])
 
-  useEffect(() => {
-    console.debug(books)
-  },[books])
-  
+  if(isLoading){
+    return( <h2> Cargando datos..... </h2>)
+  }
+  if(!user || !user.rol){
+    navigate("/login")
+  }
   return(
-    <>
+    <div className="flex flex-col min-h-[100vh] w-[100%] justify-between"> 
       <NavHeader />
-      <main className="max-w-[1280px] m-auto">
-          <Hero />
-          <Paragraphs/>
-          <BooksCatalog />
+      <main className="w-full max-w-[1280px]  m-auto min-h-[60vh]">
           <UserPanel/>
+          {children}
       </main>
       <Footer />
       <BookDetails />
-      <Modal text="Prestamo generado éxitosamente, puedes tus prestamos activos" textButton="Ver prestamos" handleClick={setConfirmLoan} isOpen={confirmLoan} />
-    </>
+       <Modal date={modalDate}/> 
+    </div>
   )
 }
 

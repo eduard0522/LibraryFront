@@ -1,4 +1,4 @@
-import { UPDATE_USER } from "./types"
+import { UPDATE_USER, SET_IS_LOADING } from "./types"
 
 
 const UserReducer = (state, action) => {
@@ -9,6 +9,11 @@ const UserReducer = (state, action) => {
         return{
           ...state ,
           user: payload
+        }
+      case SET_IS_LOADING:
+        return{
+          ...state,
+          isLoading : payload
         }
     
       default:

@@ -42,6 +42,46 @@ export const updateCopy = async (id,data)  =>{
     console.log(err)
     
    return false
+
+  } finally {
+   console.log("final")
+  
+  }
+};
+
+
+export const getLoans = async (id) => {
+  try {
+    const request = await Axios(`prestamos/getByUserId/${id}`)
+    
+    if(request.data ){
+      return request.data
+    }
+
+  } catch (error) {
+    console.debug( error.status || error.code, "DATA") 
+    return error
+  }
+}
+
+
+export const returnLoanRequest = async (loanId)  =>{
+  try {
+
+    const response = await Axios.patch(
+      `/prestamos/update/${loanId}`,
+      { "estado" : "devuelto"},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("devolución éxitosa:", response.data);
+    return response
+  } catch (err) {
+    console.log(err)
+   return false
   
   } finally {
    console.log("final")

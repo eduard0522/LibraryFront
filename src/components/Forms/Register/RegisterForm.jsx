@@ -25,7 +25,6 @@ const RegistrationForm = () => {
       [e.target.name]: e.target.value,
     })
   }
-
   const validate = () => {
     if (
       !formData.email ||

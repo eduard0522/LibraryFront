@@ -1,7 +1,7 @@
 import { FaRegUserCircle } from "react-icons/fa"
 import { IoCloseCircle } from "react-icons/io5"
 import { BiSolidEdit } from "react-icons/bi"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import {useNavigate } from "react-router"
 import DataUpdateForm from "./DataUpdateForm"
 import {ConfirmModal} from "../Modals/ConfirmModal"
@@ -13,32 +13,15 @@ const UserPanel = () => {
   const navigate = useNavigate()
   const { user , setUser} = useContext(UserContext)
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user')
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser).user
-      setUser({
-        email: parsedUser.email || '',
-        name: parsedUser.name || '',
-        phone: parsedUser.phone || '',
-        rol: parsedUser.address || '',
-        id : parsedUser.id || ""
-      })
-    }
-  }, [])
-
-  useEffect(() => {
-  },[user])
-
   const handleClickButton = () => {
     if(user){
       localStorage.removeItem("user")
       setUser(null)
+      navigate("/login")
     }else{
       navigate("/login")
     }
     }
-    
     const handleClickLink = () => {
       if(user){
         alert("Esta función aún no se ha implementado.")

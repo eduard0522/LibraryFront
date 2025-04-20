@@ -11,7 +11,9 @@ import {
    CHANGE_STATE_UPDATE_USER,
   CHANGE_STATE_CONFIRM_UPDATE_USER,
   DETAILS_BOOK,
-  SET_CONFIRM_LOAN
+  SET_CONFIRM_LOAN,
+  SET_MODAL_DATE,
+  CLOSE_MODAL
 } from "./types";
 
 const ModalsState = (props) => {
@@ -23,7 +25,14 @@ const ModalsState = (props) => {
     updateUser : false,
     confirmUpdateUser : false,
     detailsBook  : false,
-    confirmLoan : false
+    confirmLoan : false,
+    modalDate : {
+      text: '',
+      textButton: '',
+      handleClick: () => {},
+      isOpen: false,
+      onClose: () => {},
+    }
   }
 
   const [state , dispatch ] = useReducer( ModalReducer , initialState )
@@ -69,6 +78,13 @@ const ModalsState = (props) => {
     })
   }
 
+  const setModalDate = (date) => {
+    dispatch({
+      type : SET_MODAL_DATE,
+      payload: date
+    })
+  }
+
   
   const setDetailsBook = () => {
     dispatch({
@@ -85,6 +101,13 @@ const ModalsState = (props) => {
     })
   }
 
+  const closeModal = () => {
+    dispatch({
+      type : CLOSE_MODAL,
+      payload : false
+    })
+  }
+
   return(
     <ModalContext.Provider value={{
       modalShoppingCart : state.modalShoppingCart,
@@ -95,6 +118,7 @@ const ModalsState = (props) => {
       confirmUpdateUser : state.confirmUpdateUser,
       detailsBook : state.detailsBook,
       confirmLoan : state.confirmLoan,
+      modalDate : state.modalDate,
       changeStateShoppinCart,
       changeStateRegistrationForm,
       changeStateLoginForm,
@@ -102,7 +126,9 @@ const ModalsState = (props) => {
       changeStateUpdateUser,
       changeStateConfirmUpdateUser,
       setDetailsBook,
-      setConfirmLoan
+      setConfirmLoan,
+      setModalDate,
+      closeModal
     }}>
         {props.children}
     </ModalContext.Provider>

@@ -6,7 +6,9 @@ import {
   CHANGE_STATE_UPDATE_USER ,
   CHANGE_STATE_CONFIRM_UPDATE_USER,
   DETAILS_BOOK,
-  SET_CONFIRM_LOAN
+  SET_CONFIRM_LOAN,
+  SET_MODAL_DATE,
+  CLOSE_MODAL
 } from "./types"
 
 
@@ -55,6 +57,17 @@ export const ModalReducer = ( state , action ) => {
           ...state,
           confirmLoan: payload
       }
+      case SET_MODAL_DATE:
+        return{
+          ...state,
+          modalDate : payload
+        }
+      case CLOSE_MODAL:
+        return{
+          ...state,
+          modalDate : { ...state, isOpen: payload}
+        }
+        
       default:
         return{
           state

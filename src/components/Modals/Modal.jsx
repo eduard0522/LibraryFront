@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { IoCloseCircle } from "react-icons/io5";
 
-const Modal = ({ 
-  text, 
-  textButton, 
-  handleClick, 
-  onClose,
-  isOpen,
-  showCloseButton = true,
-  closeOnClickOutside = true,
-  animation = true
-}) => {
+const Modal = ({date}) => {
+  const { 
+    text, 
+    textButton, 
+    handleClick, 
+    onClose,
+    isOpen,
+    showCloseButton = true,
+    closeOnClickOutside = true,
+    animation = true
+  } = date
+
+
   const [isVisible, setIsVisible] = useState(false);
 
   // Manejar animaciones de entrada/salida
@@ -42,6 +45,7 @@ const Modal = ({
       closeModal();
     }
   };
+  if(!date) return null 
 
   return isVisible ? (
     <dialog 
@@ -53,19 +57,19 @@ const Modal = ({
       onClick={handleOutsideClick}
     >
       <div 
-        className={`bg-white relative px-12 py-8 shadow-2xl flex flex-col gap-8 justify-between items-center rounded-xl ${
+        className={`bg-slate-950 relative px-12 py-8 shadow-2xl flex flex-col gap-8 justify-between items-center rounded-xl ${
           animation ? (isOpen ? "scale-100 transition-transform duration-300" : "scale-95 transition-transform duration-300") 
           : ""
         }`}
       >
         {showCloseButton && (
           <div className="absolute top-2 right-2" onClick={closeModal}>
-            <IoCloseCircle className="text-3xl text-Primary-600 hover:text-Primary-800 cursor-pointer transition-colors duration-300" />
+            <IoCloseCircle className="text-3xl text-white hover:text-indigo-600 cursor-pointer transition-colors duration-300" />
           </div>
         )}
-        <p className="font-semibold text-wrap max-w-full text-center mt-4">{text}</p>
+        <p className="font-semibold text-wrap text-zinc-200 text-center mt-4 max-w-72">{text}</p>
         <button 
-          className="text-base bg-Primary-600 hover:bg-Primary-800 rounded-md px-4 py-2 text-white font-semibold transition-colors duration-200" 
+          className="text-base bg-indigo-600 hover:bg-indigo-800 rounded-md px-4 py-2 text-zinc-200 font-semibold transition-colors duration-200" 
           onClick={handleClick}
         >
           {textButton}

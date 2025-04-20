@@ -4,7 +4,7 @@ import Logo from "../Nav/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-200 text-gray-700 py-4 border-t max-w-[1440px] rounded-t-2xl mx-auto mt-24" >
+    <footer className="bg-zinc-200 text-gray-700 py-4 border-t w-full max-w-[1440px] rounded-t-2xl mx-auto mt-24" >
       <div className="container mx-auto px-4 flex flex-wrap justify-evenly gap-8 items-start">
         <div>
           <Logo/>

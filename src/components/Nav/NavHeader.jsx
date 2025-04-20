@@ -12,14 +12,15 @@ const NavHeader = () => {
 
 
   return(
-    <nav className="fixed top-3 left-4 py-1  right-4 flex justify-between items-center shadow-2xl  border-[1px] border-[#b3afaf36]  rounded-full px-4 z-20 bg-zinc-200">
+    <nav className="fixed top-3 left-4 py-1 max-w-[1440px] mx-auto right-4 flex justify-between items-center shadow-2xl  border-[1px] border-[#b3afaf36]  rounded-full px-4 z-20 bg-zinc-200">
       <div className=" font-bold text-black cursor-pointer text-center">
         <Logo />
         </div>
         <ul className="flex w-2/5 justify-between items-center">
           <ListItem text="Inicio" link="/" />
           <ListItem text = "Biblioteca" link="/biblioteca"/>
-         <ListItem text = "Prestamos" link="/prestamos" />
+          <ListItem text = "Prestamos" link="/prestamos" />
+          <ListItem text = "Reservas" link="/reservas" />
         </ul>
 
         <div className="flex gap-10">

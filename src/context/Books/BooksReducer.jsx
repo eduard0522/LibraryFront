@@ -1,4 +1,4 @@
-import { GET_BOOKS, SET_SELECTED_BOOK, SET_BOOK_AVALITY  , UPDATE_BOOK_AVALITY} from "./types";
+import { GET_BOOKS, SET_SELECTED_BOOK, SET_BOOK_AVALITY  , UPDATE_BOOK_AVALITY, SET_RESERVATION , GET_LOANS, UPDATE_LOAN ,UPDATE_RESERVATION} from "./types";
 
 const BooksReducer = (state, action) => {
   const { payload , type } = action
@@ -18,7 +18,6 @@ const BooksReducer = (state, action) => {
       case SET_BOOK_AVALITY: {
         let newBooks = payload || [];
         const booksAvalities = newBooks.filter( book => book.estado === "disponible")
-        console.log(booksAvalities)
         return{
           ...state,
           bookAvality: booksAvalities
@@ -27,13 +26,44 @@ const BooksReducer = (state, action) => {
       case UPDATE_BOOK_AVALITY: {
         let booksState = [...state.bookAvality]
         const booksAvalities = booksState.filter( book => book.codigo_ejemplar !== payload)
-        console.log(booksAvalities)
         return{
           ...state,
           bookAvality: booksAvalities
         }
       }
-      
+      case SET_RESERVATION:
+        return{
+          ...state,
+          reservation:payload
+        }
+      case GET_LOANS:
+        return{
+          ...state,
+          loans : payload
+        }
+        case UPDATE_LOAN: {
+          const newState = state.loans.map(loan => {
+            if (loan.id === payload) {
+              return {
+                ...loan,
+                estado: "devuelto"
+              };
+            }
+            return loan;
+          });
+        
+          return {
+            ...state,
+            loans: newState
+          };
+        }
+        case UPDATE_RESERVATION: {
+          return {
+            ...state,
+            reservation: state.reservation.filter(reservation => reservation.id !== payload)
+          };
+        }        
+        
     default:
       return state
 }

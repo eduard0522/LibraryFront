@@ -1,15 +1,17 @@
 import { useReducer } from "react"
 import BooksContext from "./BooksContext"
 import BooksReducer from "./BooksReducer"
-import { GET_BOOKS, SET_SELECTED_BOOK, SET_BOOK_AVALITY , UPDATE_BOOK_AVALITY} from "./types"
-import { getAllBooks, getCopyByIdResource } from "../../axios/books"
+import { GET_BOOKS, SET_SELECTED_BOOK, SET_BOOK_AVALITY , UPDATE_BOOK_AVALITY , SET_RESERVATION , GET_LOANS , UPDATE_LOAN , UPDATE_RESERVATION} from "./types"
+import { getAllBooks, getCopyByIdResource, getReservation } from "../../axios/books"
+import { getLoans } from "../../axios/Loans"
 
 const BooksState = ({children}) => {
   const initialState = {
     books : [],
     selectedBook: null,
     bookAvality : [],
-    loans : null
+    loans : null,
+    reservation : [],
   }
 
   const [state , dispatch ] = useReducer( BooksReducer , initialState)
@@ -37,6 +39,14 @@ const BooksState = ({children}) => {
     })
   }
 
+  const setReservation = async (id) => {
+    const books = await getReservation(id)
+    dispatch({
+      type : SET_RESERVATION,
+      payload : books
+    })
+  }
+
   const updateBookAvality = (id) => {
     dispatch({
       type:UPDATE_BOOK_AVALITY,
@@ -44,15 +54,46 @@ const BooksState = ({children}) => {
     })
   }
 
+  const setLoans = async (id) => {
+    const loans = await getLoans(id)
+    dispatch({
+      type: GET_LOANS,
+      payload:loans
+    })
+  } 
+
+  const updateLoans = (loanId) => {
+    dispatch({
+      type: UPDATE_LOAN,
+      payload: loanId
+    })
+  }
+
+  const updateReservation = (reservationId) => {
+    dispatch({
+      type: UPDATE_RESERVATION,
+      payload: reservationId
+    })
+  }
+
+
+
   return (
     <BooksContext.Provider value={{
       books : state.books,
       selectedBook: state.selectedBook,
       bookAvality: state.bookAvality,
+      reservation: state.reservation,
+      loans : state.loans,
       getBooks,
       setSelectedBook,
       setBookAvality, 
-      updateBookAvality
+      updateBookAvality,
+      setReservation,
+      setLoans,
+      updateLoans, 
+      updateReservation
+
     }}>
         {children}
     </BooksContext.Provider>

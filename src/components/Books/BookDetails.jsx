@@ -4,12 +4,14 @@ import BooksContext from "../../context/Books/BooksContext"
 import { IoMdCloseCircle } from "react-icons/io";
 import UserContext from "../../context/User/UserContext";
 import { generateLoanHelp } from "./generateLoan";
-
+import { generateReservationHelp } from "./generateReservation";
+import { useNavigate } from "react-router-dom";
 export default function BookDetails () {
 
-  const { detailsBook , setDetailsBook , setConfirmLoan  } = useContext(ModalContext)
+  const { detailsBook , setDetailsBook , setConfirmLoan , setModalDate, closeModal  } = useContext(ModalContext)
   const {selectedBook , setSelectedBook ,bookAvality, updateBookAvality } = useContext(BooksContext)
   const {user} = useContext (UserContext)
+  const navigate = useNavigate()
 
   const handleClose = () => {
    setDetailsBook()
@@ -17,17 +19,51 @@ export default function BookDetails () {
   }
 
   const handleButton = async () => {  
-    const data = await generateLoanHelp(bookAvality , user)
-    console.log( data , "confirm data")
-    if(data.data){
-      setConfirmLoan()
-      updateBookAvality(bookAvality[0].codigo_ejemplar)
-    }
-    else{
-      alert("Ocurrio un error inesperado")
-    }
-   }
+    try {
+      if(bookAvality.length > 0 ) {
+        const data = await generateLoanHelp(bookAvality , user)
+        if(data.data){
+          const handleCickModal = () => {
+            setDetailsBook()
+            navigate("/prestamos")
+            closeModal()
+          }
+          setModalDate({
+            text: "Prestamo generado éxitosamente, puedes ver tus prestamos activos.",
+            textButton:"Ver prestamos" ,
+            handleClick: handleCickModal,
+            isOpen:true,
+            onClose: closeModal
+          })
 
+          updateBookAvality(bookAvality[0].codigo_ejemplar)
+        }
+        else{
+          alert("Ocurrio un error inesperado")
+        }
+       } else{
+         const data = await generateReservationHelp(selectedBook.id , user.id)
+        if(data){
+
+          const handleCickModal = () => {
+            setDetailsBook()
+            navigate("/reservas")
+            closeModal()
+          }
+      
+          setModalDate({
+            text: "Reserva generada éxitosamente, puedes ver tus reservas activas.",
+            textButton:"Ver Reservas" ,
+            handleClick: handleCickModal,
+            isOpen:true,
+            onClose: closeModal
+          })
+        }
+       }
+    } catch (error) {
+      console.debug(error , "error")
+    }
+  }
   const book = selectedBook
   if(!detailsBook || !book ) {
     return null
@@ -55,7 +91,6 @@ export default function BookDetails () {
 
         <button className="bg-indigo-500 hover:bg-indigo-800  px-6 py-1   self-center rounded-xl text-lg text-white font-semibold transition"
         onClick={handleButton}
-        disabled= {bookAvality.length <= 0}
         >
           { bookAvality.length <= 0 ? "Reservar libro" : "Solicitar prestamo"}
           
