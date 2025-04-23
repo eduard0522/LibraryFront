@@ -64,6 +64,21 @@ export const getLoans = async (id) => {
   }
 }
 
+export const getAllLoansRequest = async () => {
+  try {
+    const request = await Axios('/prestamos/getAll')
+    console.log(request , " get loans request")
+    if(request.data ){
+      return request.data
+    }
+
+  } catch (error) {
+    console.debug( error.status || error.code, "DATA") 
+    return error
+  }
+}
+
+
 
 export const returnLoanRequest = async (loanId)  =>{
   try {

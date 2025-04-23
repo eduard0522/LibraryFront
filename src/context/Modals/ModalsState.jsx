@@ -13,8 +13,12 @@ import {
   DETAILS_BOOK,
   SET_CONFIRM_LOAN,
   SET_MODAL_DATE,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  ADMIN_PANEL,
+  CREATE_COPY
+  
 } from "./types";
+
 
 const ModalsState = (props) => {
   const initialState = {
@@ -26,6 +30,8 @@ const ModalsState = (props) => {
     confirmUpdateUser : false,
     detailsBook  : false,
     confirmLoan : false,
+    createCopy: false,
+    adminPanel:false,
     modalDate : {
       text: '',
       textButton: '',
@@ -108,6 +114,20 @@ const ModalsState = (props) => {
     })
   }
 
+  const setAdminPanel = () => {
+    dispatch({
+      type : ADMIN_PANEL,
+      payload : !state.adminPanel
+    })
+  }
+
+  const setCreateCopy = () => {
+    dispatch({
+      type : CREATE_COPY,
+      payload : !state.createCopy
+    })
+  }
+
   return(
     <ModalContext.Provider value={{
       modalShoppingCart : state.modalShoppingCart,
@@ -119,6 +139,8 @@ const ModalsState = (props) => {
       detailsBook : state.detailsBook,
       confirmLoan : state.confirmLoan,
       modalDate : state.modalDate,
+      adminPanel: state.adminPanel,
+      createCopyModal : state.createCopy,
       changeStateShoppinCart,
       changeStateRegistrationForm,
       changeStateLoginForm,
@@ -128,7 +150,9 @@ const ModalsState = (props) => {
       setDetailsBook,
       setConfirmLoan,
       setModalDate,
-      closeModal
+      closeModal,
+      setAdminPanel, 
+      setCreateCopy
     }}>
         {props.children}
     </ModalContext.Provider>

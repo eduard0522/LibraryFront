@@ -6,9 +6,11 @@ import ListItem from "./ListItem"
 import Logo from "./Logo.jsx"
 import ModalContext from "../../context/Modals/ModalContext.jsx"
 import { FaUserCog } from "react-icons/fa";
+import UserContext from "../../context/User/UserContext.jsx"
 
 const NavHeader = () => {
-  const { changeStateUserPanel} = useContext(ModalContext)
+  const { changeStateUserPanel , setAdminPanel } = useContext(ModalContext)
+  const { user }  = useContext(UserContext) 
 
 
   return(
@@ -26,6 +28,10 @@ const NavHeader = () => {
         <div className="flex gap-10">
           <div className="flex items-center justify-center " onClick={changeStateUserPanel}>
             <FaUserCog className="text-2xl hover:text-indigo-500 cursor-pointer"/>
+          </div>
+
+          <div>   
+            { user.rol === "administrativo" ? <span className="text-lg text-indigo-600 font-semibold hover:text-indigo-800 cursor-pointer hover:underline"  onClick={setAdminPanel}> Admin </span> : ""}
           </div>
 
           <div className="bg-indigo-600 px-4 py-1 rounded-full flex items-center justify-center gap-2 cursor-pointer  hover:bg-indigo-800"> <     FiPhoneCall className="text-white text-center "/> 

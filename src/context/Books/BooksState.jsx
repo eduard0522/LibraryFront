@@ -1,13 +1,15 @@
 import { useReducer } from "react"
 import BooksContext from "./BooksContext"
 import BooksReducer from "./BooksReducer"
-import { GET_BOOKS, SET_SELECTED_BOOK, SET_BOOK_AVALITY , UPDATE_BOOK_AVALITY , SET_RESERVATION , GET_LOANS , UPDATE_LOAN , UPDATE_RESERVATION} from "./types"
+import { GET_BOOKS, SET_SELECTED_BOOK, SET_BOOK_AVALITY , UPDATE_BOOK_AVALITY , SET_RESERVATION , GET_LOANS , UPDATE_LOAN , UPDATE_RESERVATION , GET_ALL_LOANS , CREATE_COPY} from "./types"
 import { getAllBooks, getCopyByIdResource, getReservation } from "../../axios/books"
-import { getLoans } from "../../axios/Loans"
+import { getAllLoansRequest, getLoans } from "../../axios/Loans"
+
 
 const BooksState = ({children}) => {
   const initialState = {
     books : [],
+    allLoans : [],
     selectedBook: null,
     bookAvality : [],
     loans : null,
@@ -21,6 +23,14 @@ const BooksState = ({children}) => {
     dispatch({
     type: GET_BOOKS,
     payload : booksData
+    })
+  }
+
+  const getAllLoans = async () => {
+    const getLoans = await getAllLoansRequest()
+    dispatch({
+      type : GET_ALL_LOANS,
+      payload : getLoans
     })
   }
 
@@ -62,6 +72,7 @@ const BooksState = ({children}) => {
     })
   } 
 
+
   const updateLoans = (loanId) => {
     dispatch({
       type: UPDATE_LOAN,
@@ -76,6 +87,12 @@ const BooksState = ({children}) => {
     })
   }
 
+  const createCopyState = (copy) => {
+    dispatch({
+      type: CREATE_COPY,
+      payload: copy
+    })
+  } 
 
 
   return (
@@ -85,6 +102,7 @@ const BooksState = ({children}) => {
       bookAvality: state.bookAvality,
       reservation: state.reservation,
       loans : state.loans,
+      allLoans : state.allLoans,
       getBooks,
       setSelectedBook,
       setBookAvality, 
@@ -92,7 +110,9 @@ const BooksState = ({children}) => {
       setReservation,
       setLoans,
       updateLoans, 
-      updateReservation
+      updateReservation,
+      getAllLoans,
+      createCopyState
 
     }}>
         {children}

@@ -1,4 +1,4 @@
-import { GET_BOOKS, SET_SELECTED_BOOK, SET_BOOK_AVALITY  , UPDATE_BOOK_AVALITY, SET_RESERVATION , GET_LOANS, UPDATE_LOAN ,UPDATE_RESERVATION} from "./types";
+import { GET_BOOKS, SET_SELECTED_BOOK, SET_BOOK_AVALITY  , UPDATE_BOOK_AVALITY, SET_RESERVATION , GET_LOANS, UPDATE_LOAN ,UPDATE_RESERVATION , GET_ALL_LOANS, CREATE_COPY} from "./types";
 
 const BooksReducer = (state, action) => {
   const { payload , type } = action
@@ -8,6 +8,12 @@ const BooksReducer = (state, action) => {
       ...state,
       books : payload
     }
+    case GET_ALL_LOANS:
+      console.log(payload , "allLoans")
+      return{
+        ...state,
+        allLoans : payload
+      }
     case SET_SELECTED_BOOK:
       return{
         ...state,
@@ -62,7 +68,14 @@ const BooksReducer = (state, action) => {
             ...state,
             reservation: state.reservation.filter(reservation => reservation.id !== payload)
           };
+        }  
+        case CREATE_COPY: {
+          return {
+            ...state,
+            bookAvality: [...state.bookAvality , payload]
+          };
         }        
+              
         
     default:
       return state

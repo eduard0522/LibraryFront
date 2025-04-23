@@ -27,6 +27,7 @@ export const getAllBooks = async () => {
 
 }
 
+
 export const getCopyByIdResource = async (id) => {
   try {
     const book = await Axios(`/ejemplares/getByResourceId/${id}`)
@@ -91,3 +92,23 @@ export const deleteReservation = async (reservationId) => {
 }
 
 
+
+export const createCopyRequest = async (data) => {
+  try {
+    const response = await Axios.post(
+      "ejemplares/create",
+      data,
+      {
+        headers: { 
+           "Content-Type" : "application/json"
+        } 
+      }
+    )
+    if(response.data){
+      return response.data
+    }
+  } catch (error) {
+    console.debug(error)
+    return error
+  }
+} 

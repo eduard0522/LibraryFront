@@ -3,9 +3,9 @@ import BooksContext from "../../context/Books/BooksContext"
 import ModalContext from "../../context/Modals/ModalContext"
 
 export default function BookCard ({book, index}) {
-
   const { setSelectedBook , setBookAvality } = useContext(BooksContext)
   const { setDetailsBook } = useContext(ModalContext)
+
   const handleClick = () => {
     setSelectedBook(book)
     setDetailsBook()
@@ -20,6 +20,6 @@ return(
     <p className="text-xs text-gray-600 mt-1">{book.genero || 'Sin genero'} - {book.fecha_publicacion}</p>
     <p className="text-xs text-gray-800 capitalize font-medium"> { book.tipo_recurso}</p>
     <p className="text-sm text-indigo-600 self-end absolute bottom-2 group-hover:text-green-600"> Ver mas detalles </p>
-</article>
+  </article>
 )
 }

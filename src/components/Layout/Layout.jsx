@@ -8,6 +8,7 @@ import UserPanel from "../UserPanel/UserPanel"
 import ModalContext from "../../context/Modals/ModalContext"
 import { useNavigate } from "react-router-dom"
 import UserContext from "../../context/User/UserContext"
+import AdminPanel from "../admin/AdminPanel"
 
 const Layout = ({children}) => {
   const {user} =useContext(UserContext)
@@ -31,6 +32,7 @@ const Layout = ({children}) => {
       <NavHeader />
       <main className="w-full max-w-[1280px]  m-auto min-h-[60vh]">
           <UserPanel/>
+          <AdminPanel />
           {children}
       </main>
       <Footer />

@@ -9,6 +9,8 @@ import NotFoundPage from "../../pages/404"
 
 import { AnimatePresence } from "framer-motion"
 import LibraryPage from "../../pages/Library"
+import LoansPageAdmin from "../../pages/admin/LoansPage"
+import BooksPage from "../../pages/admin/BooksPage"
 
 const AppRouter = () =>{ 
   return(
@@ -23,6 +25,8 @@ const AppRouter = () =>{
           <Route  path="/reservas" element={<ReservationPage />}/>
           <Route  path="/prestamos" element={<LoansPage />}/>
           <Route path="/biblioteca" element={<LibraryPage />} />
+          <Route path="/admin/prestamos" element={<LoansPageAdmin />} />
+          <Route path="/admin/ejemplares" element={<BooksPage />} />
           <Route  path="*" element={<NotFoundPage />}/>
       </Routes>
     </AnimatePresence >

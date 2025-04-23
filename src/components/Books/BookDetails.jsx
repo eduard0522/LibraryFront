@@ -8,14 +8,20 @@ import { generateReservationHelp } from "./generateReservation";
 import { useNavigate } from "react-router-dom";
 export default function BookDetails () {
 
-  const { detailsBook , setDetailsBook , setConfirmLoan , setModalDate, closeModal  } = useContext(ModalContext)
+  const { detailsBook , setDetailsBook , setModalDate, closeModal, setCreateCopy } = useContext(ModalContext)
   const {selectedBook , setSelectedBook ,bookAvality, updateBookAvality } = useContext(BooksContext)
   const {user} = useContext (UserContext)
+
+  console.log(bookAvality)
   const navigate = useNavigate()
 
   const handleClose = () => {
    setDetailsBook()
    setSelectedBook(null)
+  }
+
+  const handleClickAdmin = () => {
+    setCreateCopy()
   }
 
   const handleButton = async () => {  
@@ -70,7 +76,7 @@ export default function BookDetails () {
   }
 
   return(
-    <dialog open className="fixed w-full h-full top-0 left-0 right-0 bottom-0 bg-[#00000060] z-50 flex items-center justify-center">
+    <dialog open className="fixed w-full h-full top-0 left-0 right-0 bottom-0 bg-[#00000060] z-40 flex items-center justify-center">
     
       <article className="w-[700px] flex gap-8 bg-slate-900 backdrop-blur-md p-4 rounded-xl shadow-2xl transition-all duration-300 relative">
       <div onClick={handleClose} className="text-2xl absolute top-2 right-2 cursor-pointer"> <IoMdCloseCircle className="text-2xl text-indigo-400 hover:text-indigo-600"/> </div>
@@ -88,13 +94,26 @@ export default function BookDetails () {
         <p className="text-gray-100 text-xs" > Tipo de recurso: <span className="capitalize"> { book.tipo_recurso} </span> </p>
         <p className="text-xs text-gray-200 mt-1">{book.genero} - {book.fecha_publicacion}</p>
         <p className={`text-xs text-indigo-200 mt-2`}>Disponibles : { bookAvality.length <= 0 ? '0' : bookAvality.length} </p>
-
-        <button className="bg-indigo-500 hover:bg-indigo-800  px-6 py-1   self-center rounded-xl text-lg text-white font-semibold transition"
-        onClick={handleButton}
-        >
-          { bookAvality.length <= 0 ? "Reservar libro" : "Solicitar prestamo"}
+        
+        {
+            user.rol !== "administrativo" ? 
+            <button className="bg-indigo-500 hover:bg-indigo-800  px-6 py-1   self-center rounded-xl text-lg text-white font-semibold transition"
+                 onClick={handleButton}
+              >
+             { bookAvality.length <= 0 ? "Reservar libro" : "Solicitar prestamo"}
           
-        </button>
+            </button>
+             :
+             <div className="flex gap-4 justify-center items-center">
+                <button className="bg-indigo-500 hover:bg-indigo-800  px-4 py-1   self-center rounded-xl text-base text-white font-semibold transition" onClick={handleClickAdmin}>
+                  Agregar ejemplar
+                </button>  
+                <button className="bg-indigo-500 hover:bg-indigo-800  px-4 py-1  self-center rounded-xl text-base text-white font-semibold transition">
+                  Editar recurso
+                </button>
+            </div>
+        }
+        
          </div>
       </article>
     </dialog>

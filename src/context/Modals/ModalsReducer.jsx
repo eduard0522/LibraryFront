@@ -8,7 +8,9 @@ import {
   DETAILS_BOOK,
   SET_CONFIRM_LOAN,
   SET_MODAL_DATE,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  ADMIN_PANEL,
+  CREATE_COPY
 } from "./types"
 
 
@@ -66,6 +68,17 @@ export const ModalReducer = ( state , action ) => {
         return{
           ...state,
           modalDate : { ...state, isOpen: payload}
+        }
+      case ADMIN_PANEL:
+        console.log("admin")
+        return{
+          ...state,
+          adminPanel : payload
+        }
+      case CREATE_COPY:
+        return{
+          ...state,
+          createCopy : payload
         }
         
       default:
