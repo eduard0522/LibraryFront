@@ -4,16 +4,19 @@ import { Link } from 'react-router'
 import InputForm from '../Login/InputForm'
 import { RegisterRequest } from '../../../axios/Auth'
 import ModalContext from '../../../context/Modals/ModalContext'
-
+import { IoCloseCircle } from 'react-icons/io5'
 
 const RegistrationForm = () => {
-  const { changeStateRegistrationForm } = useContext(ModalContext)
-  const [formData, setFormData] = useState({
+  const { changeStateRegistrationForm , registrationForm , setModalDate , closeModal } = useContext(ModalContext)
+  const initialState = {
+    id: '',
+    nombre: '',
     email: '',
-    password: '',
-    name: '',
-    phone: '',
-  })
+    telefono: '',
+    rol : '',
+    contrasena : ''
+  }
+  const [formData, setFormData] = useState(initialState)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState()
@@ -27,12 +30,24 @@ const RegistrationForm = () => {
   }
   const validate = () => {
     if (
+      !formData.id ||
+      !formData.nombre ||
       !formData.email ||
-      !formData.password ||
-      !formData.name ||
-      !formData.phone
+      !formData.telefono ||
+      !formData.rol ||
+      !formData.contrasena
     ) {
       setError('Todos los campos son requeridos')
+      return false
+    }
+
+    if (formData.telefono.length < 10) {
+      setError('El teléfono debe tener al menos 10 dígitos')
+      return false
+    }
+
+    if (formData.contrasena.length < 8) {
+      setError('La contraseña debe tener al menos 8 caracteres')
       return false
     }
     return true
@@ -45,18 +60,20 @@ const handleSubmit = async (e) => {
     try {
       const response = await RegisterRequest(formData, setLoading, setError)
       if (response) {
-        localStorage.setItem('user', JSON.stringify({
-          user: {
-            name : response.data.name || "user",
-            phone : response.data.phone || "no phone",
-            email : response.data.email || "noemail@mail.com",
-            adrress : response.data.address || "",
-            orders : response.data.orders || []
-          }
-        }) )
+        const handleCLickModal = () => {
+          closeModal()
+        }
+        setModalDate({
+          text: "Usuario creado éxitosamente..",
+          textButton:"Muy bien" ,
+          handleClick: handleCLickModal,
+          isOpen:true,
+          onClose: closeModal
+        })
+        setFormData(initialState)
         changeStateRegistrationForm()
       } else{
-        setError('Creadenciales invalidos')
+        setError('Datos invalidos')
       }
       
     } catch (e) {
@@ -65,15 +82,18 @@ const handleSubmit = async (e) => {
       setLoading(false)
     }
   }
-  return (
-    <article className='py-8 px-12 rounded-md backdrop-blur-sm bg-[#5882c126] border-[1px] border-[#ffffff32] flex flex-col gap-4'>
-       <h1 className='flex text-5xl font-bold text-white'>
-        LibreX
-      </h1>
 
-      <h2 className='text-xl font-bold text-white'>
+  if(!registrationForm) return null
+  
+
+  return (
+    <article className='py-8 px-12 fixed top-1/2 left-1/2  min-w-96 -translate-x-1/2 -translate-y-1/2 rounded-md backdrop-blur-sm z-50 bg-slate-900 flex flex-col gap-4'>
+        <div className='text-2xl text-indigo-400 absolute top-2 right-2 hover:text-indigo-600 cursor-pointer' onClick={()=> { changeStateRegistrationForm()}}>
+           <IoCloseCircle />
+        </div>
+      <h2 className='text-2xl font-bold text-white'>
         {' '}
-        Bienvenido a Librex{' '}
+        Crear nuevo usuario{' '}
       </h2>
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col gap-2'>
@@ -83,47 +103,65 @@ const handleSubmit = async (e) => {
             value={formData.email}
             placeholder='Correo'
             handleChange={handleChange}
+            required
+          />
+             <InputForm
+            type='text'
+            name='id'
+            value={formData.id}
+            placeholder='Codigo indentificador'
+            handleChange={handleChange}
+            required
           />
           <InputForm
             type='text'
-            name='name'
-            value={formData.name}
+            name='nombre'
+            value={formData.nombre}
             placeholder='Nombre'
             handleChange={handleChange}
+            required
           />
           <InputForm
             type='text'
-            name='phone'
-            value={formData.phone}
+            name='telefono'
+            value={formData.telefono}
+            minLength={10} 
             placeholder='Teléfono'
             handleChange={handleChange}
+            required
           />
+       <label htmlFor="rol" className='text-white'>Rol</label>
+          <select
+            name="rol"
+            id="rol"
+            required
+            className='rounded-md py-1'
+            value={formData.rol}
+            onChange={handleChange} 
+          
+            >
+            <option value="" disabled>Seleccione un rol</option>
+            <option value="estudiante">Estudiante</option>
+            <option value="administrativo">Administrativo</option>
+            <option value="profesor">Profesor</option>
+          </select>
           <InputForm
             type='password'
-            name='password'
-            value={formData.password}
+            name='contrasena'
+            minLength={8} 
+            value={formData.contrasena}
             placeholder='Contraseña'
             handleChange={handleChange}
+            required
           />
           <button
-            className='w-full rounded-md bg-blue-900 py-2 px-4 text-white font-bold hover:bg-blue-950'
+            className='w-full rounded-md bg-indigo-800 py-2  mt-2 px-4 text-white font-bold hover:bg-blue-800 transition-colors'
             type='submit'
             disabled={loading}
           >
             {' '}
             Crear cuenta{' '}
           </button>
-
-          <h3 className='font-semibold text-white'>
-            {' '}
-            ¿ Ya tienes una cuenta ?{' '}
-            <Link to="/login">
-              <span className='text-white font-bold underline hover:text-blue-950 cursor-pointer'>
-                {' '}
-                Inicia Sesión{' '}
-              </span>
-            </Link>
-          </h3>
 
           {error && <p className='text-red-600 font-semibold'>{error}</p>}
         </div>

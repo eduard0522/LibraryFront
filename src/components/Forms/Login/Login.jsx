@@ -15,8 +15,8 @@ const Login = () => {
       <ConfirmModal
         modal={loginForm}
         setModal={changeStateLoginForm}
-        text="Bienvenido de vuelta a Vianda, ¿ que vas a pedir hoy?"
-        textButton="Antojarme"
+        text="Bienvenido de vuelta, ¿ que vas a leer hoy?"
+        textButton="Ingresar"
         link="/"
       />
     </>

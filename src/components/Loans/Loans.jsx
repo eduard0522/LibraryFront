@@ -65,10 +65,10 @@ const Loans = () => {
 
   if(!loans || !loans.length){
     return(
-      <>
-        <h2 className="text-zinc-200 text-2xl"> Aún no tienes prestamos </h2>
-        <button className="text-zinc-200 bg-slate-900 rounded-xl"> Solicitar un prestamo </button>
-      </>
+      <div className="flex flex-col items-center justify-center mt-24 gap-4">
+        <h2 className="text-zinc-200 text-2xl mt-24"> Aún no tienes prestamos </h2>
+        <button className="text-zinc-200  bg-indigo-600 rounded-md py-1 px-2"> Solicitar un prestamo </button>
+      </div>
     )
   }
   return(

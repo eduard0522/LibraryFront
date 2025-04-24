@@ -8,21 +8,19 @@ import { useNavigate } from "react-router-dom"
 
 const AdminPanel = () => {
   const {user } = useContext(UserContext)
-  const { adminPanel , setAdminPanel    } = useContext(ModalContext)
+  const { adminPanel , setAdminPanel , changeStateRegistrationForm   } = useContext(ModalContext)
 
   const navigate = useNavigate()
 
   const handleClickLink = () => {
     console.log("click")
   }
-
-
   const handleClickButton = () => {
     console.log("click")
   }
   return (
     <>
-    <aside className={` w-[500px] shadow-top-sides bg-indigo-950 fixed z-50 right-4 bottom-0 rounded-t-xl transition-all duration-500 ease-in-out${  adminPanel ? 'translate-x-0 opacity-100' : '-right-4 translate-x-full translate-y-full opacity-50' }`}>
+    <aside className={` w-[500px] shadow-top-sides  bg-indigo-950 fixed z-50 right-4 bottom-0 rounded-t-xl transition-all duration-500 ease-in-out${  adminPanel ? 'translate-x-0 opacity-100' : '-right-4 translate-x-full translate-y-full opacity-50' }`}>
       <> 
         <div onClick={setAdminPanel}> 
           <IoCloseCircle className="text-3xl text-zinc-300 absolute top-2 right-2 hover:text-indigo-400 cursor-pointer" /> 
@@ -52,6 +50,10 @@ const AdminPanel = () => {
               <span className="bg-indigo-600 text-zinc-200 py-2 px-8 rounded-md cursor-pointer"> ver </span>
             </div>
             <div className="flex text-zinc-200 justify-between w-full py-8 border-b-2 border-zinc-300 pb-4">
+              <span className="text-xl font-medium"> Usuarios  </span>
+              <span className="bg-indigo-600 text-zinc-200 py-2 px-8 rounded-md cursor-pointer" onClick={() => {changeStateRegistrationForm()}}> Crear </span>
+            </div>
+            <div className="flex text-zinc-200 justify-between w-full py-8 border-b-2 border-zinc-300 pb-4">
               <span className="text-xl font-medium"> Tu perfil </span>
               <span>
                 {user?.rol ? user.rol : 'invitado'}
@@ -64,7 +66,7 @@ const AdminPanel = () => {
             <span className="text-indigo-500 underline font-semibold cursor-pointer hover:text-zinc-200" onClick={handleClickLink}> { !user ? 'Crear cuenta' : 'Eliminar cuenta'} </span>
 
         </article>
-        
+
         </>
     </aside>
     </>

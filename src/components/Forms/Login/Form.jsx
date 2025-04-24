@@ -60,7 +60,7 @@ const FormLogin = () => {
   }
 
   return (
-    <article className='py-8 px-12 rounded-2xl backdrop-blur-md transition-all duration-200 z-20 bg-[#5882c126] border-[1px] border-[#ffffff32]   flex flex-col gap-6'>
+    <article className='py-8 px-12 rounded-2xl min-w-80 backdrop-blur-md transition-all duration-200 z-20 bg-[#5882c126] border-[1px] border-[#ffffff32]   flex flex-col gap-6'>
       <h1 className='flex text-5xl font-bold text-white'>
         LibreX
       </h1>
@@ -97,17 +97,6 @@ const FormLogin = () => {
             {' '}
             Iniciar Sesión{' '}
           </button>
-
-          <h3 className='font-medium text-white'>
-            {' '}
-            ¿ No tienes cuenta ?{' '}
-            <Link to="/register">  
-              <span className='text-white font-semibold underline  hover:text-blue-950  cursor-pointer'>
-                crear una ahora{' '}
-              </span>
-            </Link> 
-              
-          </h3>
 
           {error && <p className='text-red-600 font-semibold'>{error}</p>}
         </div>

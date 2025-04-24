@@ -8,6 +8,7 @@ const InputForm = ({type , name, placeholder , value, handleChange }) => {
           name={name}
           id={name}
           required 
+          placeholder={placeholder}
           value={value}
           onChange={handleChange}
           className="p-1 rounded-md border-2 " />

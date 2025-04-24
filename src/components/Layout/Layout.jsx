@@ -9,6 +9,7 @@ import ModalContext from "../../context/Modals/ModalContext"
 import { useNavigate } from "react-router-dom"
 import UserContext from "../../context/User/UserContext"
 import AdminPanel from "../admin/AdminPanel"
+import RegistrationForm from "../Forms/Register/RegisterForm"
 
 const Layout = ({children}) => {
   const {user} =useContext(UserContext)
@@ -37,7 +38,8 @@ const Layout = ({children}) => {
       </main>
       <Footer />
       <BookDetails />
-       <Modal date={modalDate}/> 
+      <RegistrationForm />
+      <Modal date={modalDate}/> 
     </div>
   )
 }
