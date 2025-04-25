@@ -1,14 +1,15 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect  } from "react"
+import { useNavigate } from "react-router-dom"
 import UserContext from "../../context/User/UserContext"
 import BooksContext from "../../context/Books/BooksContext"
 import { cancelReservation } from "./reservaionHelper"
 import ModalContext from "../../context/Modals/ModalContext"
 
-
 const Reservation = () => {
   const {reservation , setReservation, updateReservation } = useContext(BooksContext)
   const {user , isLoading} = useContext(UserContext)
   const { closeModal , setModalDate}  = useContext(ModalContext)
+  const navigate = useNavigate()
   let count = 0
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const Reservation = () => {
     return(
       <div className="flex flex-col items-center justify-center mt-24 gap-4">
       <h2 className="text-zinc-200 text-2xl mt-24"> Aún no tienes reservas </h2>
-      <button className="text-zinc-200  bg-indigo-600 rounded-md py-1 px-2"> Realizar una reserva </button>
+      <button className="text-zinc-200  bg-indigo-600 rounded-md py-1 px-2" onClick={() => {navigate("/biblioteca")}}> Realizar una reserva </button>
     </div>
     )
   }

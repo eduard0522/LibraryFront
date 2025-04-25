@@ -59,12 +59,6 @@ const AdminPanel = () => {
                 {user?.rol ? user.rol : 'invitado'}
               </span>
             </div>
-
-            <div className="w-full flex items-center justify-center pt-8">
-              <button className="text-xl bg-indigo-500 rounded-md text-white px-8 py-2 hover:bg-indigo-800" onClick={handleClickButton}>  { !user ? 'Iniciar sesión' : 'Cerrar Sesión'} </button>
-            </div>
-            <span className="text-indigo-500 underline font-semibold cursor-pointer hover:text-zinc-200" onClick={handleClickLink}> { !user ? 'Crear cuenta' : 'Eliminar cuenta'} </span>
-
         </article>
 
         </>

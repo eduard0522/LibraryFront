@@ -14,5 +14,3 @@
 ## 👥 Autores
 
 Desarrollado por Eduard Villamil y Franklin COrtes como parte de un proyecto académico.
-
----

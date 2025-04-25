@@ -1,8 +1,9 @@
 import { LoginRequest } from '../../../axios/Auth'
 import { useContext, useState } from 'react'
-import { Link } from 'react-router'
 import InputForm from './InputForm'
 import ModalContext from '../../../context/Modals/ModalContext'
+import { setUserLocalStored } from './loginHelper'
+import UserContext from '../../../context/User/UserContext'
 
 const FormLogin = () => {
   const { changeStateLoginForm } = useContext(ModalContext)
@@ -10,6 +11,8 @@ const FormLogin = () => {
     email: '',
     contrasena: '',
   })
+
+  const {setUser} = useContext(UserContext)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState()
@@ -28,26 +31,20 @@ const FormLogin = () => {
     }
     return true
   }
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
     if (!validate()) return
     setLoading(true)
-    console.log(formData)
     try {
       const response = await LoginRequest(formData, setLoading, setError)
       if (response) {
-        localStorage.setItem('user', JSON.stringify({
-          user: {
-            name : response.data.nombre || "user",
-            phone : response.data.telefono || "no phone",
-            email : response.data.email || "noemail@mail.com",
-            rol : response.data.rol || "",
-            id : response.data.id || ""
-          }
-        }))
-        changeStateLoginForm()
+        const userStored = setUserLocalStored(response.data)
+        if(userStored){
+          changeStateLoginForm()
+          setUser(userStored)
+        }
       } else{
         setError('Creadenciales invalidos')
       }
